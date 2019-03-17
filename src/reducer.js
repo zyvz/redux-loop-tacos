@@ -9,10 +9,17 @@ export const initialState = {
 };
 
 const handleFetch = state => {
-  return {
+  const loadingState = {
     loading: true,
     ingredients: state.ingredients
   };
+
+  //side effect description
+  const cmd = Cmd.run(fetchIngredientsEffect, {
+    successActionCreator: successAction
+  });
+
+  return loop(loadingState, cmd);
 };
 
 const handleSuccess = (state, action) => {
